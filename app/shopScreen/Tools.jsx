@@ -11,7 +11,7 @@ import {
   Modal,
   TouchableWithoutFeedback,
 } from "react-native";
-import Heart from "./Components/Heart";
+import Heart from "./Components/HeartIcon";
 import Icon from "react-native-vector-icons/AntDesign";
 
 import Filter from "react-native-vector-icons/Ionicons";
