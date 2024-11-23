@@ -11,6 +11,9 @@ const index = () => {
       <TouchableOpacity onPress={() => router.push('/cart')}>
         <Button title="Go to Cart" />
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => router.push('/profile')}>
+        <Button title="Go to Profile" />
+      </TouchableOpacity>
     </View>
   )
 }
