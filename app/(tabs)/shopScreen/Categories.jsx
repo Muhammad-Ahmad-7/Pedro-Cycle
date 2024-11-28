@@ -9,31 +9,27 @@ import {
   Image,
   FlatList,
 } from "react-native";
+import { Router } from "expo-router/build/Route";
 import Icon from "react-native-vector-icons/Ionicons";
-const cycle = require("../../assets/images/onboarding2.png");
+import { router } from "expo-router";
+const cycle = require("../../../assets/images/onboarding2.png");
 // import { router } from "expo-router";
 const categories = [
   {
     id: "1",
     title: "Cycles",
-    image:
-      "https://plus.unsplash.com/premium_photo-1678718713393-2b88cde9605b?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: "2",
     title: "Tools",
-    image:
-      "https://plus.unsplash.com/premium_photo-1678718713393-2b88cde9605b?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: "3",
     title: "Accessories",
-    image: require("../"),
   },
   {
     id: "4",
     title: "Apparel",
-    image: require("../../assets/images/cyc.jpg"),
   },
 ];
 
@@ -41,9 +37,8 @@ const Categories = () => {
   const renderCategoryItem = ({ item }) => (
     <TouchableOpacity
       style={styles.categoryItem}
-      onPress={() => console.log("helo")}
+      onPress={() => router.push("/shopScreen/Tools")}
     >
-      {/* <Pressable onPress={() => }></Pressable> */}
       <View style={styles.categoryContent}>
         <Text style={styles.categoryTitle}>{item.title}</Text>
         <View style={styles.imageContainer}>

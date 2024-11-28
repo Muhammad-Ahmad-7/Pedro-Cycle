@@ -10,13 +10,15 @@ import {
   StatusBar,
   Modal,
   TouchableWithoutFeedback,
+  Pressable,
 } from "react-native";
 import Heart from "./Components/HeartIcon";
 import Icon from "react-native-vector-icons/AntDesign";
-
 import Filter from "react-native-vector-icons/Ionicons";
 
 import colors from "@/constants/colors";
+import { useWishlist } from "../wishLish/WishListContext"; // Import Wishlist Context
+
 // Sample data structure
 const categories = [
   {
@@ -28,42 +30,42 @@ const categories = [
         name: "Btwin Multitool",
         originalPrice: "60€",
         currentPrice: "45€",
-        image: require("../../assets/images/onboarding2.png"),
+        image: require("../../../assets/images/onboarding2.png"),
       },
       {
         id: "2",
         name: "Btwin F Grip",
         originalPrice: "40€",
         currentPrice: "30€",
-        image: require("../../assets/images/onboarding2.png"),
+        image: require("../../../assets/images/onboarding2.png"),
       },
       {
         id: "3",
         name: "O Stem",
         originalPrice: "70€",
         currentPrice: "60€",
-        image: require("../../assets/images/onboarding2.png"),
+        image: require("../../../assets/images/onboarding2.png"),
       },
       {
         id: "4",
         name: "11x28 Road Cassette",
         originalPrice: "75€",
         currentPrice: "60€",
-        image: require("../../assets/images/onboarding2.png"),
+        image: require("../../../assets/images/onboarding2.png"),
       },
       {
         id: "5",
         name: "XS 100 Toolkit",
         originalPrice: "25€",
         currentPrice: "18€",
-        image: require("../../assets/images/onboarding2.png"),
+        image: require("../../../assets/images/onboarding2.png"),
       },
       {
         id: "6",
         name: "Btwin R Wrench",
         originalPrice: "20€",
         currentPrice: "16€",
-        image: require("../../assets/images/onboarding2.png"),
+        image: require("../../../assets/images/onboarding2.png"),
       },
     ],
   },
@@ -83,6 +85,8 @@ const Tools = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showSortModal, setShowSortModal] = useState(false);
   const [selectedSort, setSelectedSort] = useState(null);
+
+  const { wishlist, toggleWishlist } = useWishlist(); // Access wishlist and toggleWishlist function
 
   // Filter options
   const filterOptions = [
@@ -116,6 +120,10 @@ const Tools = () => {
       default:
         return products;
     }
+  };
+
+  const isItemInWishlist = (item) => {
+    return wishlist.some((wishlistItem) => wishlistItem.id === item.id);
   };
 
   const SortModal = () => (
@@ -214,9 +222,15 @@ const Tools = () => {
               />
               <View style={styles.productInfo}>
                 <Text style={styles.productName}>{product.name}</Text>
-                <View style={{ position: "absolute", right: 0, top: -15 }}>
-                  <Heart />
-                </View>
+                <Pressable
+                  onPress={() => {
+                    console.log("Heart pressed for product:", product);
+                    toggleWishlist(product);
+                  }}
+                  style={{ position: "absolute", right: 0, top: -15 }}
+                >
+                  <Heart filled={isItemInWishlist(product)} />
+                </Pressable>
                 <View style={styles.priceContainer}>
                   <Text style={styles.originalPrice}>
                     {product.originalPrice}
