@@ -5,6 +5,7 @@ import { router, Stack } from "expo-router";
 import colors from "@/constants/colors";
 import { useNavigation } from "@react-navigation/native"; // For navigation
 import Feather from "react-native-vector-icons/Feather";
+import { supabase } from "@/lib/supabase";
 
 const MyProfile = () => {
   const navigation = useNavigation();
@@ -20,6 +21,19 @@ const MyProfile = () => {
   // Navigate to the respective screens
   const navigateTo = (screen: string) => {
     // navigation.navigate(screen);
+  };
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('Error signing out:', error.message);
+      } else {
+        router.replace('/auth/signup');
+      }
+    } catch (error) {
+      console.error('Unexpected error during sign out:', error);
+    }
   };
 
   return (
@@ -66,6 +80,14 @@ const MyProfile = () => {
           onPress={() => router.push("/profile/settings")}
         >
           <Text style={styles.cardTitle}>Settings</Text>
+          <Feather name="arrow-right" color={colors.lightGray} size={30} />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.card}
+          onPress={handleLogout}
+        >
+          <Text style={styles.cardTitle}>Logout</Text>
           <Feather name="arrow-right" color={colors.lightGray} size={30} />
         </TouchableOpacity>
       </View>

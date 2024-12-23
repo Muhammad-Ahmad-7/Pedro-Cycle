@@ -13,7 +13,7 @@ import { Router } from "expo-router/build/Route";
 import Icon from "react-native-vector-icons/Ionicons";
 import { router } from "expo-router";
 const cycle = require("../../../assets/images/onboarding2.png");
-// import { router } from "expo-router";
+
 const categories = [
   {
     id: "1",
@@ -53,10 +53,9 @@ const Categories = () => {
       <View style={styles.searchContainer}>
         <Icon name="search" size={20} color="#999" style={styles.icon} />
         <TextInput
-          style={[styles.searchInput, { borderWidth: 0 }]} // Make sure to remove any border styling on focus
+          style={[styles.searchInput, { borderWidth: 0 }]}
           placeholder="Search"
           placeholderTextColor="#666"
-          //   onFocus={(e) => (e.target.style.outline = "none")} // Optional: for web, prevents focus outline
         />
       </View>
       <View style={styles.headerContainer}>
@@ -67,6 +66,7 @@ const Categories = () => {
         renderItem={renderCategoryItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.categoriesList}
+        style={styles.flatListStyle}
       />
     </View>
   );
@@ -76,12 +76,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.darkBackground,
-    padding: 16,
+  },
+  flatListStyle: {
+    flex: 1,
   },
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",
-    margin: 10,
+    margin: 16,
     borderRadius: 10,
     backgroundColor: colors.lightBackground,
     paddingHorizontal: 10,
@@ -94,26 +96,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   headerContainer: {
-    // flex: 1,
-    // backgroundColor: "red",
     justifyContent: "center",
     alignItems: "center",
-    fontWeight: "bold",
-    color: colors.white,
-    padding: 5,
-    marginBottom: 20,
+    paddingVertical: 16,
   },
   header: {
     fontSize: 24,
-    // flex: 1,
-    // backgroundColor: "blue",
     fontWeight: "bold",
-
     color: colors.white,
-
-    // marginBottom: 20,
   },
   categoriesList: {
+    flexGrow: 1,
+    paddingHorizontal: 16,
     paddingBottom: 16,
   },
   categoryItem: {
@@ -121,13 +115,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     overflow: "hidden",
     backgroundColor: colors.lightBackground,
+    flex: 1,
   },
   categoryContent: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     height: 100,
-    // padding: 16,
   },
   categoryTitle: {
     padding: 16,
@@ -140,8 +134,6 @@ const styles = StyleSheet.create({
     flex: 55,
     width: 100,
     height: 100,
-    // borderRadius: 8,
-    // padding: 16,
     overflow: "hidden",
   },
   categoryImage: {
@@ -152,3 +144,4 @@ const styles = StyleSheet.create({
 });
 
 export default Categories;
+
