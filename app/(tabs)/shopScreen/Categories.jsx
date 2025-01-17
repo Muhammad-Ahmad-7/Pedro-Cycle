@@ -1,5 +1,5 @@
 import colors from "@/constants/colors";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -13,36 +13,38 @@ import { Router } from "expo-router/build/Route";
 import Icon from "react-native-vector-icons/Ionicons";
 import { router } from "expo-router";
 const cycle = require("../../../assets/images/onboarding2.png");
-
-const categories = [
-  {
-    id: "1",
-    title: "Cycles",
-  },
-  {
-    id: "2",
-    title: "Tools",
-  },
-  {
-    id: "3",
-    title: "Accessories",
-  },
-  {
-    id: "4",
-    title: "Apparel",
-  },
-];
+import {supabase} from '../../../lib/supabase'
 
 const Categories = () => {
+
+  const [categories, setCateogries] = useState([]);
+
+  useEffect(() => {
+    console.log("HIHIHI")
+    const fetchData = async () => {
+      try {
+        const {data} = await supabase.from('categories').select('*');
+        console.log(data)
+        if (data) {
+          setCateogries(data);
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData();
+  }, [])
+  
+
   const renderCategoryItem = ({ item }) => (
     <TouchableOpacity
       style={styles.categoryItem}
       onPress={() => router.push("/shopScreen/Tools")}
     >
       <View style={styles.categoryContent}>
-        <Text style={styles.categoryTitle}>{item.title}</Text>
+        <Text style={styles.categoryTitle}>{item.name}</Text>
         <View style={styles.imageContainer}>
-          <Image source={cycle} style={styles.categoryImage} />
+          <Image source={{ uri : item.pic_uri}} style={styles.categoryImage} />
         </View>
       </View>
     </TouchableOpacity>
@@ -116,24 +118,24 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     backgroundColor: colors.lightBackground,
     flex: 1,
+    height: 180
   },
   categoryContent: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    height: 100,
+    height: 180,
   },
   categoryTitle: {
     padding: 16,
     flex: 45,
     color: "#fff",
-    fontSize: 18,
+    fontSize: 25,
     fontWeight: "600",
   },
   imageContainer: {
     flex: 55,
     width: 100,
-    height: 100,
     overflow: "hidden",
   },
   categoryImage: {
